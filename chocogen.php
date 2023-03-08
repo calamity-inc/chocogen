@@ -30,7 +30,7 @@ if (empty($config["path"]))
 mkdir("chocogen");
 mkdir("chocogen/path");
 
-file_put_contents("chocogen/$name.nuspec", <<<EOC
+$nuspec = <<<EOC
 <?xml version="1.0"?>
 <package>
   <metadata>
@@ -38,9 +38,26 @@ file_put_contents("chocogen/$name.nuspec", <<<EOC
     <version>$version</version>
     <description>Why is this a required field?</description>
     <authors>Why is this a required field?</authors>
+EOC;
+if (!empty($config["dependencies"]))
+{
+    $nuspec .= "\n    <dependencies>\n";
+    foreach ($config["dependencies"] as $dep)
+    {
+	    $nuspec .= "      <dependency id=\"".$dep["id"]."\"";
+	    if (array_key_exists("version", $dep))
+	    {
+	    	$nuspec .= " version=\"".$dep["version"]."\"";
+	    }
+	    $nuspec .= " />\n";
+	}
+    $nuspec .= "    </dependencies>\n";
+}
+$nuspec .= <<<'EOC'
   </metadata>
 </package>
-EOC);
+EOC;
+file_put_contents("chocogen/$name.nuspec", $nuspec);
 
 file_put_contents("chocogen/chocolateyInstall.ps1", <<<'EOC'
 $installDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
