@@ -1,7 +1,14 @@
 <?php
 if (empty($argv[1]))
 {
-	die("Syntax: php chocogen.php <version>\n");
+	if (strpos($argv[0], ".php") !== false)
+	{
+		die("Syntax: php chocogen.php <version>\n");
+	}
+	else
+	{
+		die("Syntax: chocogen <version>\n");
+	}
 }
 
 $name = basename(getcwd());
