@@ -28,7 +28,6 @@ if (empty($config["path"]))
 }
 
 mkdir("chocogen");
-mkdir("chocogen/path");
 
 $nuspec = <<<EOC
 <?xml version="1.0"?>
@@ -59,12 +58,6 @@ $nuspec .= <<<'EOC'
 EOC;
 file_put_contents("chocogen/$name.nuspec", $nuspec);
 
-file_put_contents("chocogen/chocolateyInstall.ps1", <<<'EOC'
-$installDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-
-Install-ChocolateyPath "$installDir\path"
-EOC);
-
 function getExt($file)
 {
 	$arr = explode(".", $file);
@@ -72,6 +65,7 @@ function getExt($file)
 }
 
 $abort = false;
+$need_path = false;
 
 foreach ($config["path"] as $path)
 {
@@ -80,6 +74,12 @@ foreach ($config["path"] as $path)
 
 	if ($ext == "php")
 	{
+		if (!$need_path)
+		{
+			$need_path = true;
+			mkdir("chocogen/path");
+		}
+
 		copy($path, "chocogen/".$file);
 
 		file_put_contents("chocogen/path/".substr($file, 0, -4).".bat", <<<EOC
@@ -97,7 +97,7 @@ foreach ($config["path"] as $path)
 	}
 	else if ($ext == "exe")
 	{
-		copy($path, "chocogen/path/".$file);
+		copy($path, "chocogen/".$file);
 	}
 	else
 	{
@@ -109,6 +109,15 @@ foreach ($config["path"] as $path)
 
 if (!$abort)
 {
+	if ($need_path)
+	{
+		file_put_contents("chocogen/chocolateyInstall.ps1", <<<'EOC'
+		$installDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+
+		Install-ChocolateyPath "$installDir\path"
+		EOC);
+	}
+
 	chdir("chocogen");
 	//passthru("chocolatey pack");
 	shell_exec("chocolatey pack");
