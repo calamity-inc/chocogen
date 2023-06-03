@@ -119,8 +119,8 @@ if (!$abort)
 	}
 
 	chdir("chocogen");
-	//passthru("chocolatey pack");
-	shell_exec("chocolatey pack");
+	//passthru("choco pack");
+	shell_exec("choco pack");
 	chdir("..");
 
 	foreach(scandir("chocogen") as $file)
