@@ -32,36 +32,36 @@ mkdir("chocogen");
 $nuspec = <<<EOC
 <?xml version="1.0"?>
 <package>
-  <metadata>
-    <id>$name</id>
-    <version>$version</version>
-    <description>Why is this a required field?</description>
-    <authors>Why is this a required field?</authors>
+	<metadata>
+		<id>$name</id>
+		<version>$version</version>
+		<description>Why is this a required field?</description>
+		<authors>Why is this a required field?</authors>
 EOC;
 if (!empty($config["website"]))
 {
-	$nuspec .= "\n    <projectUrl>".$config["website"]."</projectUrl>";
+	$nuspec .= "\n\t\t<projectUrl>".$config["website"]."</projectUrl>";
 }
 if (!empty($config["tags"]))
 {
-	$nuspec .= "\n    <tags>".$config["tags"]."</tags>";
+	$nuspec .= "\n\t\t<tags>".$config["tags"]."</tags>";
 }
 if (!empty($config["dependencies"]))
 {
-    $nuspec .= "\n    <dependencies>\n";
-    foreach ($config["dependencies"] as $dep)
-    {
-	    $nuspec .= "      <dependency id=\"".$dep["id"]."\"";
-	    if (array_key_exists("version", $dep))
-	    {
-	    	$nuspec .= " version=\"".$dep["version"]."\"";
-	    }
-	    $nuspec .= " />\n";
+	$nuspec .= "\n\t\t<dependencies>\n";
+	foreach ($config["dependencies"] as $dep)
+	{
+		$nuspec .= "\t\t\t<dependency id=\"".$dep["id"]."\"";
+		if (array_key_exists("version", $dep))
+		{
+			$nuspec .= " version=\"".$dep["version"]."\"";
+		}
+		$nuspec .= " />\n";
 	}
-    $nuspec .= "    </dependencies>\n";
+	$nuspec .= "\t\t</dependencies>\n";
 }
 $nuspec .= <<<'EOC'
-  </metadata>
+	</metadata>
 </package>
 EOC;
 file_put_contents("chocogen/$name.nuspec", $nuspec);
