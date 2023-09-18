@@ -38,6 +38,14 @@ $nuspec = <<<EOC
     <description>Why is this a required field?</description>
     <authors>Why is this a required field?</authors>
 EOC;
+if (!empty($config["website"]))
+{
+	$nuspec .= "\n    <projectUrl>".$config["website"]."</projectUrl>";
+}
+if (!empty($config["tags"]))
+{
+	$nuspec .= "\n    <tags>".$config["tags"]."</tags>";
+}
 if (!empty($config["dependencies"]))
 {
     $nuspec .= "\n    <dependencies>\n";
