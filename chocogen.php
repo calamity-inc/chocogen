@@ -61,6 +61,10 @@ file_put_contents("chocogen/$name.nuspec", $nuspec);
 function getExt($file)
 {
 	$arr = explode(".", $file);
+	if (count($arr) < 2)
+	{
+		return "";
+	}
 	return $arr[count($arr) - 1];
 }
 
@@ -95,7 +99,7 @@ foreach ($config["path"] as $path)
 		php "\$pathDir/../$file" "$@"
 		EOC);
 	}
-	else if ($ext == "exe")
+	else if ($ext == "exe" || $ext == "txt" || $ext == "")
 	{
 		copy($path, "chocogen/".$file);
 	}
