@@ -29,6 +29,7 @@ if (empty($config["path"]))
 
 mkdir("chocogen");
 
+// Generic Information
 $nuspec = <<<EOC
 <?xml version="1.0"?>
 <package>
@@ -38,14 +39,34 @@ $nuspec = <<<EOC
 EOC;
 $nuspec .= "\n\t\t<description>".($config["description"] ?? "Why is this a required field?")."</description>";
 $nuspec .= "\n\t\t<authors>".($config["authors"] ?? "Why is this a required field?")."</authors>";
-if (!empty($config["website"]))
+if (!empty($config["title"]))
 {
-	$nuspec .= "\n\t\t<projectUrl>".$config["website"]."</projectUrl>";
+	$nuspec .= "\n\t\t<title>".$config["title"]."</title>";
 }
 if (!empty($config["tags"]))
 {
 	$nuspec .= "\n\t\t<tags>".$config["tags"]."</tags>";
 }
+
+// Links
+if (!empty($config["website"]))
+{
+	$nuspec .= "\n\t\t<projectUrl>".$config["website"]."</projectUrl>";
+}
+if (!empty($config["icon"]))
+{
+	$nuspec .= "\n\t\t<iconUrl>".$config["icon"]."</iconUrl>";
+}
+if (!empty($config["license"]))
+{
+	$nuspec .= "\n\t\t<licenseUrl>".$config["license"]."</licenseUrl>";
+}
+if (!empty($config["changelog"]))
+{
+	$nuspec .= "\n\t\t<releaseNotes>".$config["changelog"]."</releaseNotes>";
+}
+
+// Misc
 if (!empty($config["dependencies"]))
 {
 	$nuspec .= "\n\t\t<dependencies>\n";
