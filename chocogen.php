@@ -35,9 +35,9 @@ $nuspec = <<<EOC
 	<metadata>
 		<id>$name</id>
 		<version>$version</version>
-		<description>Why is this a required field?</description>
-		<authors>Why is this a required field?</authors>
 EOC;
+$nuspec .= "\n\t\t<description>".($config["description"] ?? "Why is this a required field?")."</description>";
+$nuspec .= "\n\t\t<authors>".($config["authors"] ?? "Why is this a required field?")."</authors>";
 if (!empty($config["website"]))
 {
 	$nuspec .= "\n\t\t<projectUrl>".$config["website"]."</projectUrl>";
