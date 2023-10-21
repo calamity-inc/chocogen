@@ -57,6 +57,10 @@ if (!empty($config["website"]))
 {
 	$nuspec .= "\n\t\t<projectUrl>".$config["website"]."</projectUrl>";
 }
+if (!empty($config["repository"]))
+{
+	$nuspec .= "\n\t\t<packageSourceUrl>".$config["repository"]."</packageSourceUrl>";
+}
 if (!empty($config["icon"]))
 {
 	$nuspec .= "\n\t\t<iconUrl>".$config["icon"]."</iconUrl>";
@@ -68,6 +72,10 @@ if (!empty($config["license"]))
 if (!empty($config["changelog"]))
 {
 	$nuspec .= "\n\t\t<releaseNotes>".$config["changelog"]."</releaseNotes>";
+}
+if (!empty($config["issues"]))
+{
+	$nuspec .= "\n\t\t<bugTrackerUrl>".$config["issues"]."</bugTrackerUrl>";
 }
 
 // Misc
