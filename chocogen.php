@@ -38,6 +38,10 @@ $nuspec = <<<EOC
 		<version>$version</version>
 EOC;
 $nuspec .= "\n\t\t<description>".($config["description"] ?? "Why is this a required field?")."</description>";
+if ($config["description"])
+{
+	$nuspec .= "\n\t\t<summary>".$config["description"]."</summary>";
+}
 $nuspec .= "\n\t\t<authors>".($config["authors"] ?? "Why is this a required field?")."</authors>";
 if (!empty($config["title"]))
 {
