@@ -12,7 +12,3 @@ choco install chocogen
 ```
 
 Note that Chocolatey 2.0.0 or above is needed.
-
-## Known issues
-
-- Path is not cleaned up after uninstall of package with PHP script in path. This is a Chocolatey issue. See https://github.com/chocolatey/choco/issues/310.
